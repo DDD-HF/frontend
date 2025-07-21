@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import './App.css';
-import { Button } from '../shared/ui/Button';
+import { MemberSearchPage } from '../pages/memberSearchPage/ui';
 
 function App() {
   return (
     <>
-      <Button />
+      <MemberSearchPage />
     </>
   );
 }
