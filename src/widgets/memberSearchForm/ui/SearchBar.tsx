@@ -41,7 +41,7 @@ const SearchBar = ({ placeholder = '검색어를 입력하세요', inputSize = '
   return (
     <SearchBarWrapper>
       <InputText
-        inputSize={inputSize}
+        size={inputSize}
         placeholder={placeholder}
         value={inputValue}
         onChange={handleInputChange}

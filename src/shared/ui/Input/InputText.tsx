@@ -14,7 +14,7 @@ const sizeStyles = {
 };
 
 const StyledInputText = styled.input<
-  Pick<InputTextProps, 'inputSize'> & {
+  Pick<InputTextProps, 'size'> & {
     $isInvalid: boolean;
   }
 >`
@@ -27,7 +27,7 @@ const StyledInputText = styled.input<
   background-color: ${props => (props.$isInvalid ? '#ffe6e6' : '#fff')};
   outline: none;
   transition: all 0.3s ease;
-  ${props => sizeStyles[props.inputSize || 'medium']}
+  ${props => sizeStyles[props.size || 'medium']}
 
   &:focus {
     border-color: ${props => (props.$isInvalid ? 'red' : '#007bff')};
@@ -44,7 +44,7 @@ const StyledInputText = styled.input<
 `;
 
 export interface InputTextProps {
-  inputSize?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large';
   regex?: RegExp;
   placeholder?: string;
   value?: string;
@@ -54,7 +54,7 @@ export interface InputTextProps {
   disabled?: boolean;
 }
 
-const InputText = ({ inputSize = 'medium', regex, placeholder, value, onChange, onValidChange, max, disabled }: InputTextProps) => {
+const InputText = ({ size = 'medium', regex, placeholder, value, onChange, onValidChange, max, disabled }: InputTextProps) => {
   const [isInvalid, setIsInvalid] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +76,7 @@ const InputText = ({ inputSize = 'medium', regex, placeholder, value, onChange, 
   return (
     <StyledInputText
       disabled={disabled}
-      inputSize={inputSize}
+      size={size}
       type='text'
       placeholder={placeholder}
       value={value}
