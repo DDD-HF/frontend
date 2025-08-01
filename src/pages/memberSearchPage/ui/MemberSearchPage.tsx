@@ -1,5 +1,8 @@
-import { PageTemplate } from '../../../shared/ui';
-import { MemberPageFooter, MemberPageHeader } from '../../../widgets/memberSearchForm/ui';
+import { PageTemplate } from "../../../shared/ui";
+import {
+  MemberPageFooter,
+  MemberPageHeader,
+} from "../../../widgets/memberSearchForm/ui";
 
 const MemberSearchPage = () => {
   return (

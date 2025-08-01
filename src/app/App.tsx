@@ -1,11 +1,11 @@
-import './global/global.css';
-import { DefaultLayout } from '../shared/ui';
-import { MemberSearchPage } from '../pages/memberSearchPage/ui';
+import "./global/global.css";
+import { DefaultLayout } from "../shared/ui";
+import { FormTestPage } from "../pages/FormTestPage";
 
 function App() {
   return (
     <DefaultLayout>
-      <MemberSearchPage />
+      <FormTestPage />
     </DefaultLayout>
   );
 }
