@@ -87,7 +87,8 @@ const FormTestPage = () => {
               />
               <select className={styles.selectBox}>
                 <option value="someOption">Some option</option>
-                <option value="otherOption">Other option</option>
+                <option value="otherOption">Other option1 </option>
+                <option value="otherOption"> Other option2 </option>
               </select>
             </div>
           </div>
