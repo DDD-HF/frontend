@@ -1,0 +1,36 @@
+.formRow {
+  display: grid;
+  gap: 16px;
+
+  &.col-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  &.col-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &.col-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &.col-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    &.col-1,
+    &.col-2,
+    &.col-3,
+    &.col-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.formField {
+  width: 100%;
+}
+// export const FormRow: React.FC<Props> = ({ col = 1, children }) => {
+//   return <div className={`${styles.formRow} ${styles[`col-${col}`]}`}>{children}</div>;
+// };

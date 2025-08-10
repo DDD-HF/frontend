@@ -20,38 +20,14 @@ $BG_COLOR8: #1e1e1e;
 *::after {
   box-sizing: border-box;
 }
-/* react-datepicker 초기화 */
-
-.react-datepicker-wrapper {
-  width: 100% !important;
-  /*datePicker 전체 */
-  .react-datepicker__input-container {
-    /* icon 위치 */
-    .react-datepicker__calendar-icon {
-      position: absolute;
-      right: 0 !important;
-      input {
-        /* input 클릭시 발생하는 함수 + 아래에 달력 생성*/
-        &.react-datepicker-ignore-onclickoutside {
-          outline: none !important;
-          box-shadow: none !important;
-          border: none !important;
-        }
-      }
-    }
-  }
-  /* input 초기화 */
-  .react-datepicker__view-calendar-icon {
-    input {
-      padding: 0 !important;
-    }
-  }
-}
-//inpit
+/* input form 초기화 or 초기 스타일링 */
+input,
+select,
 .datePicker,
 .formInput,
 .customDatepicker,
 .selectBox {
+  width: 100%;
   padding: 0 8px;
   height: 40px;
   box-sizing: border-box;
@@ -63,53 +39,111 @@ $BG_COLOR8: #1e1e1e;
   &::placeholder {
     color: $GRAY6;
   }
-  &:focus,
-  &:focus-visible {
+  &:focus {
     border: 1px solid $PRIMARY;
+    // outline-color: $PRIMARY;
+  }
+  &:focus-visible {
+    // outline-color: $PRIMARY;
+    outline: none;
   }
 }
-.formInput {
-  /* input 공통*/
-}
-.formField {
-  display: flex;
+.textarea {
   width: 100%;
-  gap: 6px;
-  & > * {
-    flex: 1;
-    // flex: 1 1 0%;
-    box-sizing: border-box;
+  padding: 8px;
+  height: auto;
+  box-sizing: border-box;
+  color: $BLACK;
+  background-color: $BG_COLOR1;
+  border: 1px solid $GRAY3;
+  border-radius: 6px;
+  &::placeholder {
+    color: $GRAY6;
   }
-  .react-datepicker-wrapper {
-    flex: 1 1 0% !important;
-    min-width: 0;
-    display: flex;
+  &:focus {
+    border: 1px solid $PRIMARY;
+    // outline-color: $PRIMARY;
   }
-  .customDatepicker {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
+  &:focus-visible {
+    // outline-color: $PRIMARY;
+    outline: none;
   }
 }
+/* react-datepicker 초기화 */
+:global {
+  .react-datepicker-wrapper {
+    width: 100%;
+    /*datePicker 전체 */
+    .react-datepicker__input-container {
+      /* icon 위치 */
+      .react-datepicker__calendar-icon {
+        position: absolute;
+        right: 0 !important;
+        input {
+          /* input 클릭시 발생하는 함수 + 아래에 달력 생성*/
+          &.react-datepicker-ignore-onclickoutside {
+            outline: none !important;
+            box-shadow: none !important;
+            border: none !important;
+          }
+        }
+      }
+    }
+    /* input 초기화 */
+    .react-datepicker__view-calendar-icon {
+      input {
+        padding: 0 !important;
+      }
+    }
+    .selectBox {
+      &.placeholder {
+        color: $GRAY6 !important; // 플레이스홀더일 때
+      }
+    }
+  }
+
+  .react-datepicker {
+    font-family: "Pretendard";
+    border: 1px solid #ddd;
+    box-shadow: none;
+  }
+}
+
+.width {
+  &--full {
+    width: 100% !important;
+  }
+}
+/* 테스트 */
+.container-inner {
+  padding: 20px;
+  border-radius: 16px;
+  &.border-box {
+    box-sizing: border-box;
+    border: 1px solid $GRAY3;
+  }
+}
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; // 각 줄 간 간격
+}
+
+/* //테스트 */
 .datePicker {
   width: 100%;
   display: flex;
   align-items: center;
-
   text-align: center;
   padding-right: 14px;
 }
-
 .customDatepicker {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 100% !important;
+  box-sizing: border-box;
   cursor: pointer;
   font-size: 0.875rem;
-  // &:hover {
-  //   border-color: #999;
-  // }
   input {
     flex: 1;
     border: none;

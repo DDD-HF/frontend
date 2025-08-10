@@ -2,9 +2,10 @@ import { useState, useMemo } from "react";
 import { PageTemplate } from "../../shared/ui";
 import DatePicker from "react-datepicker";
 import CustomDateInput from "./CustomDateInput";
+import { FormRow } from "../../shared/ui/FormRow/FormRow";
 
-import styles from "./FormTestPage.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
+import styles from "./FormTestPage.module.scss";
 import { styled } from "styled-components";
 
 const DefaultLayoutHeaderArea = styled.div`
@@ -20,8 +21,6 @@ import {
 
 /* **
   - 조건 및 진행 방향
-  1. 탭 진행은 하지 않음
-  2. 사진 부분 삭제
   3. 폼 레이아웃 잡기
   4. input(각 사용성에 맞는 ex.textfield) 
   4-1. dropdown
@@ -62,36 +61,129 @@ const FormTestPage = () => {
       </PageTemplate.Header>
       <PageTemplate.Content>
         <div className="page-body use-gnb">
-          <p> form 구조 잡을 공간 </p>
-          <div className={styles.formGrid}>
-            <div className={styles.formField}>
-              <input
-                type="text"
-                className={styles.formInput}
-                placeholder="이름"
-              />
-              <input
-                type="text"
-                className={styles.formInput}
-                placeholder="회원번호"
-              />
-              {/* DatePicker 삽입 */}
-              <DatePicker
-                selected={formData.joinDate}
-                onChange={handleDateChange}
-                dateFormat="yyyy.MM.dd"
-                maxDate={new Date()}
-                minDate={new Date("2000-01-01")}
-                customInput={<CustomDateInput placeholder="가입일 선택" />}
-                className="customDatepicke"
-              />
-              <select className={styles.selectBox}>
-                <option value="someOption">Some option</option>
-                <option value="otherOption">Other option1 </option>
-                <option value="otherOption"> Other option2 </option>
-              </select>
+          <div className="container">
+            <div
+              className={`${styles["container-inner"]} ${styles["border-box"]}`}
+            >
+              <div className={styles.formGrid}>
+                {/* 1줄에 2개 */}
+                <FormRow col={2}>
+                  <div className={styles.formField}>
+                    <input
+                      type="text"
+                      className={styles.formInput}
+                      placeholder="이름"
+                    />
+                  </div>
+                  <div className={styles.formField}>
+                    <input type="text" placeholder="회원번호" />
+                  </div>
+                </FormRow>
+                {/* 1줄에 4개 */}
+                <FormRow col={4}>
+                  <div className={styles.formField}>
+                    <input
+                      type="text"
+                      className={styles.formInput}
+                      placeholder="휴대전화"
+                    />
+                  </div>
+                  <div className={styles.formField}>
+                    <input type="text" placeholder="유선전화" />
+                  </div>
+                  <div className={styles.formField}>
+                    <div className="width--full">
+                      <DatePicker
+                        selected={formData.joinDate}
+                        onChange={handleDateChange}
+                        dateFormat="yyyy.MM.dd"
+                        maxDate={new Date()}
+                        minDate={new Date("2000-01-01")}
+                        customInput={
+                          <CustomDateInput placeholder="가입일 선택" />
+                        }
+                        className="customDatepicker"
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.formField}>
+                    <select className={styles.selectBox} defaultValue="">
+                      <option value="" disabled hidden>
+                        선택
+                      </option>
+                      <option value="cms">CMS</option>
+                      <option value="other">Other option</option>
+                    </select>
+                  </div>
+                </FormRow>
+                {/* 1줄에 4개 */}
+                <FormRow col={3}>
+                  <div className={styles.formField}>
+                    <input
+                      type="text"
+                      className={styles.formInput}
+                      placeholder="휴대전화"
+                    />
+                  </div>
+                  <div className={styles.formField}>
+                    <input type="text" placeholder="유선전화" />
+                  </div>
+                  <div className={styles.formField}>
+                    <select className={styles.selectBox} defaultValue="">
+                      <option value="" disabled hidden>
+                        선택
+                      </option>
+                      <option value="cms">CMS</option>
+                      <option value="other">Other option</option>
+                    </select>
+                  </div>
+                </FormRow>
+                {/* 1줄에 1개 (전체 넓이) */}
+                <FormRow col={1}>
+                  <div className={styles.formField}>
+                    <textarea
+                      className={styles.textarea}
+                      placeholder="메모(full-width)"
+                      rows={4}
+                    />
+                  </div>
+                </FormRow>
+                <FormRow col={1}>
+                  <div className="width--full">
+                    <DatePicker
+                      selected={formData.joinDate}
+                      onChange={handleDateChange}
+                      dateFormat="yyyy.MM.dd"
+                      maxDate={new Date()}
+                      minDate={new Date("2000-01-01")}
+                      customInput={
+                        <CustomDateInput placeholder="가입일 선택" />
+                      }
+                      className="customDatepicker"
+                    />
+                  </div>
+                </FormRow>
+                <FormRow col={1}>
+                  <div className={styles.formField}>
+                    <select className={styles.selectBox} defaultValue="">
+                      <option value="" disabled hidden className="placeholder">
+                        선택하세요
+                      </option>
+                      <option value="someOption">Some option</option>
+                      <option value="otherOption">Other option1 </option>
+                      <option value="otherOption"> Other option2 </option>
+                    </select>
+                  </div>
+                </FormRow>
+                <FormRow col={1}>
+                  <div className={styles.formField}>
+                    <input type="text" placeholder="full area" />
+                  </div>
+                </FormRow>
+              </div>
             </div>
           </div>
+          s
         </div>
       </PageTemplate.Content>
       <PageTemplate.Footer>
