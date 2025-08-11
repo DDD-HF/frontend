@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { InputText } from '../../../shared/ui/Input';
-import { Button } from '../../../shared/ui/Button';
+import { Button } from '@/shared/ui';
+import { InputText } from '@/shared/ui';
 
 const SearchBarWrapper = styled.div`
   display: flex;

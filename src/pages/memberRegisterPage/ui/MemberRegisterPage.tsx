@@ -1,17 +1,16 @@
 import { PageTemplate } from '@/shared/ui';
-import { MemberPageContent, MemberPageHeader } from '@/widgets/memberSearchForm';
 
-const MemberSearchPage = () => {
+const MemberRegisterPage = () => {
   return (
     <PageTemplate>
       <PageTemplate.Header>
-        <MemberPageHeader />
+        <h1>회원등록</h1>
       </PageTemplate.Header>
       <PageTemplate.Content>
-        <MemberPageContent />
+        <p>member</p>
       </PageTemplate.Content>
     </PageTemplate>
   );
 };
 
-export default MemberSearchPage;
+export default MemberRegisterPage;

@@ -9,7 +9,7 @@ const PageTemplateContext = createContext<PageTemplateContextValue | undefined>(
 export const usePageTemplate = () => {
   const context = useContext(PageTemplateContext);
   if (!context) {
-    throw new Error('PageTemplate compound components must be used within PageTemplate');
+    throw new Error('PageTemplate 안에서 사용하세요.');
   }
   return context;
 };
@@ -17,7 +17,7 @@ export const usePageTemplate = () => {
 // ========================= Context =========================
 
 const PageTemplate = ({ children, variant = 'default' }: PageTemplateProps) => {
-  const [contextTestCount, setContextTestCount] = useState(1);
+  const [contextTestCount, setContextTestCount] = useState(0);
 
   const handleCountPlus = () => {
     setContextTestCount(contextTestCount + 1);
