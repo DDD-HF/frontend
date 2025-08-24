@@ -1,0 +1,1 @@
+export { default as MemberInfoRegisterForms } from './ui/MemberInfoRegisterForms';

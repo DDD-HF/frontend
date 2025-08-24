@@ -44,7 +44,7 @@ export const TabButton = styled.button<{ $isActive: boolean }>`
 `;
 
 export const TabPanelWrapper = styled.div`
-  padding: 24px;
+  padding: 1px;
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-top: none;

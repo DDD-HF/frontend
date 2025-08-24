@@ -1,4 +1,5 @@
 import { PageTemplate } from '@/shared/ui';
+import {MemberInfoRegisterForms} from "@/widgets/MemberInfoRegisterForms";
 
 const MemberRegisterPage = () => {
   return (
@@ -7,7 +8,7 @@ const MemberRegisterPage = () => {
         <h1>회원등록</h1>
       </PageTemplate.Header>
       <PageTemplate.Content>
-        <p>member</p>
+          <MemberInfoRegisterForms/>
       </PageTemplate.Content>
     </PageTemplate>
   );

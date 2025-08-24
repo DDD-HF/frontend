@@ -16,6 +16,7 @@ const DefaultLayoutSidebarArea = styled.div`
 
 const DefaultLayoutContentArea = styled.div`
   grid-area: ct;
+    padding: 1rem;
 `;
 
 const DefaultLayout = () => {

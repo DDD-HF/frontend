@@ -7,3 +7,5 @@ export { useTabs } from './Layout/Tabs/Tabs';
 
 export { default as Button } from './Button/Button';
 export { default as InputText } from './Input/InputText';
+
+export { default as Form } from './Layout/Form/Form.tsx'
