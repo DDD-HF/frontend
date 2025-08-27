@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState} from "react";
 import { PageTemplate } from "../../shared/ui";
 
 import DatePicker from "react-datepicker";
@@ -9,38 +9,25 @@ import { FormField } from "./../../shared/ui/Form/Layout/FormRow/FormRow";
 
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./FormTestPage.module.scss";
-import { styled } from "styled-components";
+//import { styled } from "styled-components";
 
-const DefaultLayoutHeaderArea = styled.div`
-  height: 60px;
-  grid-area: hd;
-  background: red;
-`;
+// const DefaultLayoutHeaderArea = styled.div`
+//   height: 60px;
+//   grid-area: hd;
+//   background: red;
+// `;
 
 import {
   MemberPageFooter,
   MemberPageHeader,
 } from "../../widgets/memberSearchForm/ui";
 
-/* ** to do
-  - 조건 및 진행 방향
-  3. 폼 레이아웃 잡기
-  4. input(각 사용성에 맞는 ex.textfield) 
-  4-1. dropdown
-  4-2. datepicker
-  4-3. select 기타 등등 컴포넌트 생성  
-  그리고 모든 input 을 다루는 최상위 컴포넌트에서 
-  각 input 들의 상태(입력값)를 관리하는 로직이 들어가면 됨.
-  5. 인풋하단에 에러 에러 메세지 대체
-  - 8/16 Todo
+/* ** 
+  TODO
   상태값 처리
-  투두로 관리하기
   컴포넌트화, 스타일은 후에 하기
   onChange={handleChange} 값 추가
-  -----------------------------------------------
-  설치 datepicker
-  npm install react-datepicker date-fns
-  npm install --save-dev @types/react-datepicker
+  에러처리
 ** */
 
 // 폼 데이터 타입
@@ -51,7 +38,7 @@ type FormData = {
   landlineNo:string;
   service:string;
   memo: string;
-  joinData: Date | null;
+  joinDate: Date | null;
 };
 // 초기값 
 const initialForm: FormData = {
@@ -63,6 +50,7 @@ const initialForm: FormData = {
   memo: "",
   joinDate: new Date(),
 }
+
 const FormTestPage = () => {
   const [formData, setFormData] = useState<FormData>(initialForm);
 
@@ -74,9 +62,9 @@ const FormTestPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // 날짜만 따로
+  // 날짜만 따로 - 이유:
   const handleDateChange = (date: Date | null) => {
-    setFormData((prev) => ({ ...prev, joinDate: date }));
+    setFormData((prev) => ({ ...prev, joinDate: date })); 
   };
 
   return (
@@ -119,6 +107,7 @@ const FormTestPage = () => {
                       type="text"
                       name="mobileNo"
                       value={formData.mobileNo}
+                      onChange={handleChange}
                       className={styles.formInput}
                       placeholder="휴대전화"
                     />
@@ -141,10 +130,11 @@ const FormTestPage = () => {
                         maxDate={new Date()}
                         minDate={new Date("2000-01-01")}
                         customInput={
-                          <CustomDateInput placeholder="가입일 선택" />
+                          <CustomDateInput 
+                            placeholder="가입일 선택" />
                         }
                         className="customDatepicker"
-                      />
+                      /> //forwardRef로
                     </div>
                   </div>
                   <div className={styles.formField}>
@@ -153,7 +143,7 @@ const FormTestPage = () => {
                       value={formData.service}
                       onChange={handleChange} 
                       className={styles.selectBox} 
-                      defaultValue="">
+                      >
                       <option 
                         value="" 
                         disabled 
@@ -235,9 +225,9 @@ const FormTestPage = () => {
                   <select 
                       name="service"
                       value={formData.service}
-                      onChange={handleChange} ㄴ
+                      onChange={handleChange} 
                       className={styles.selectBox} 
-                      defaultValue="">
+                      >
                       <option value="" disabled hidden className="placeholder">
                         선택하세요
                       </option>
