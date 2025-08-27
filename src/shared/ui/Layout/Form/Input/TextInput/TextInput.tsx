@@ -17,7 +17,7 @@ const TextInput = memo(({name, validation, validationMessage, ...props}: TextInp
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        console.log(`⌨️ Input change in ${name}:`, value);
+        console.log(`Input change in ${name}:`, value);
 
         triggerFlash();
         fieldProps.onChange(value);
@@ -38,7 +38,7 @@ const TextInput = memo(({name, validation, validationMessage, ...props}: TextInp
     };
 
     const handleFocus = () => {
-        console.log(`👆 Focus on ${name}`);
+        console.log(`Focus on ${name}`);
         triggerFlash();
     };
 

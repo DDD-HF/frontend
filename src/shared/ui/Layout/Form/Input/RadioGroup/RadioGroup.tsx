@@ -11,13 +11,13 @@ const RadioGroup = memo(({ name, options, disabled }: RadioGroupProps) => {
     const { isFlashing, triggerFlash } = useFlashAnimation();
 
     const handleChange = (value: string) => {
-        console.log(`📻 Radio change in ${name}:`, value);
+        console.log(`Radio change in ${name}:`, value);
         triggerFlash();
         fieldProps.onChange(value);
     };
 
     const handleFocus = () => {
-        console.log(`👆 Focus on radio ${name}`);
+        console.log(`Focus on radio ${name}`);
         triggerFlash();
     };
 

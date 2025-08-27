@@ -34,10 +34,8 @@ const Form = ({ children, onSubmit, initialValues = {} }: FormProps) => {
     const [requiredFields, setRequiredFields] = useState<Set<string>>(new Set());
 
     const setValue = useCallback((name: string, value: FormValue) => {
-        console.log(`📝 Setting ${name}:`, value);
         setValues(prev => ({ ...prev, [name]: value }));
 
-        // 필수 필드의 값이 입력되면 에러 제거
         if (requiredFields.has(name) && value && String(value).trim() !== '') {
             setErrors(prev => {
                 const newErrors = { ...prev };
@@ -67,7 +65,6 @@ const Form = ({ children, onSubmit, initialValues = {} }: FormProps) => {
         setRequiredFields(prev => new Set(prev).add(name));
     }, []);
 
-    // 필수 필드 검증을 useMemo로 최적화하고 상태 변경 없이 계산만
     const requiredFieldsValidation = useMemo(() => {
         const missingRequiredFields: string[] = [];
 
@@ -93,7 +90,6 @@ const Form = ({ children, onSubmit, initialValues = {} }: FormProps) => {
         return !hasValidationErrors && requiredFieldsValid;
     }, [validationErrors, requiredFieldsValidation, requiredFields, values]);
 
-    // 필수 필드 에러 검증을 별도 함수로 분리
     const validateAndSetRequiredFieldErrors = useCallback(() => {
         const { missingFields } = requiredFieldsValidation;
         const newErrors: Record<string, string> = {};
@@ -119,16 +115,13 @@ const Form = ({ children, onSubmit, initialValues = {} }: FormProps) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        console.log(errors)
-
         const requiredFieldsValid = validateAndSetRequiredFieldErrors();
 
         if (!requiredFieldsValid || !isFormValid) {
-            console.warn('⚠️ Form has validation errors, submission blocked');
             return;
         }
 
-        console.log('✅ Form submitted successfully:', values);
+        console.log('Form submit :', values);
         onSubmit?.(values);
     };
 

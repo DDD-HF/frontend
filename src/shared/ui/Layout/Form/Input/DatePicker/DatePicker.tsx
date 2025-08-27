@@ -11,13 +11,13 @@ const DatePicker = memo(({ name, disabled, min, max }: DatePickerProps) => {
     const { isFlashing, triggerFlash } = useFlashAnimation();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log(`📅 Date change in ${name}:`, e.target.value);
+        console.log(`Date change in ${name}:`, e.target.value);
         triggerFlash();
         fieldProps.onChange(e.target.value);
     };
 
     const handleFocus = () => {
-        console.log(`👆 Focus on date ${name}`);
+        console.log(`Focus on date ${name}`);
         triggerFlash();
     };
 

@@ -11,13 +11,13 @@ const Dropdown = memo(({ name, options, placeholder, disabled }: DropdownProps) 
     const { isFlashing, triggerFlash } = useFlashAnimation();
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        console.log(`📋 Dropdown change in ${name}:`, e.target.value);
+        console.log(`Dropdown change in ${name}:`, e.target.value);
         triggerFlash();
         fieldProps.onChange(e.target.value);
     };
 
     const handleFocus = () => {
-        console.log(`👆 Focus on dropdown ${name}`);
+        console.log(`Focus on dropdown ${name}`);
         triggerFlash();
     };
 
