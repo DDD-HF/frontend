@@ -1,11 +1,11 @@
-import { useState} from "react";
+import { useState } from "react";
 import { PageTemplate } from "../../shared/ui";
 
 import DatePicker from "react-datepicker";
 import CustomDateInput from "./CustomDateInput";
 
 import { FormRow } from "./../../shared/ui/Form/Layout/FormRow/FormRow";
-import { FormField } from "./../../shared/ui/Form/Layout/FormRow/FormRow";
+// import { FormField } from "./../../shared/ui/Form/Layout/FormRow/FormRow";
 
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./FormTestPage.module.scss";
@@ -34,29 +34,31 @@ import {
 type FormData = {
   name: string;
   memberNo: string;
-  mobileNo:string;
-  landlineNo:string;
-  service:string;
+  mobileNo: string;
+  landlineNo: string;
+  service: string;
   memo: string;
   joinDate: Date | null;
 };
-// 초기값 
+// 초기값
 const initialForm: FormData = {
   name: "",
   memberNo: "",
-  mobileNo:"",
+  mobileNo: "",
   landlineNo: "",
   service: "",
   memo: "",
   joinDate: new Date(),
-}
+};
 
 const FormTestPage = () => {
   const [formData, setFormData] = useState<FormData>(initialForm);
 
   // 입력/셀렉트/텍스트에어리어 공통 변경 핸들러
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -64,7 +66,7 @@ const FormTestPage = () => {
 
   // 날짜만 따로 - 이유:
   const handleDateChange = (date: Date | null) => {
-    setFormData((prev) => ({ ...prev, joinDate: date })); 
+    setFormData((prev) => ({ ...prev, joinDate: date }));
   };
 
   return (
@@ -82,6 +84,9 @@ const FormTestPage = () => {
                 {/* 1줄에 2개 */}
                 <FormRow col={2}>
                   <div className={styles.formField}>
+                    <label htmlFor="name" className="sr-only">
+                      이름
+                    </label>
                     <input
                       type="text"
                       name="name"
@@ -92,16 +97,23 @@ const FormTestPage = () => {
                     />
                   </div>
                   <div className={styles.formField}>
-                    <input 
+                    <label htmlFor="memberNo" className="sr-only">
+                      회원번호
+                    </label>
+                    <input
                       type="text"
                       name="memberNo"
-                      value={formData.memberNo} 
+                      value={formData.memberNo}
                       onChange={handleChange}
-                      placeholder="회원번호"/>
+                      placeholder="회원번호"
+                    />
                   </div>
                 </FormRow>
                 {/* 1줄에 4개 */}
                 <FormRow col={4}>
+                  <label htmlFor="mobileNo" className="sr-only">
+                    휴대전화
+                  </label>
                   <div className={styles.formField}>
                     <input
                       type="text"
@@ -113,12 +125,15 @@ const FormTestPage = () => {
                     />
                   </div>
                   <div className={styles.formField}>
-                    <input 
+                    <label htmlFor="landlineNo" className="sr-only">
+                      유선전화
+                    </label>
+                    <input
                       type="text"
                       name="landlineNo"
                       value={formData.landlineNo}
-                      onChange={handleChange} 
-                      placeholder="유선전화" 
+                      onChange={handleChange}
+                      placeholder="유선전화"
                     />
                   </div>
                   <div className={styles.formField}>
@@ -130,24 +145,24 @@ const FormTestPage = () => {
                         maxDate={new Date()}
                         minDate={new Date("2000-01-01")}
                         customInput={
-                          <CustomDateInput 
-                            placeholder="가입일 선택" />
+                          <CustomDateInput placeholder="가입일 선택" />
                         }
                         className="customDatepicker"
-                      /> //forwardRef로
+                      />{" "}
+                      {/* forwardRef로 */}
                     </div>
                   </div>
                   <div className={styles.formField}>
-                    <select 
+                    <label htmlFor="service" className="sr-only">
+                      셀렉트 박스
+                    </label>
+                    <select
                       name="service"
                       value={formData.service}
-                      onChange={handleChange} 
-                      className={styles.selectBox} 
-                      >
-                      <option 
-                        value="" 
-                        disabled 
-                        hidden>
+                      onChange={handleChange}
+                      className={styles.selectBox}
+                    >
+                      <option value="" disabled hidden>
                         선택
                       </option>
                       <option value="cms">CMS</option>
@@ -158,22 +173,28 @@ const FormTestPage = () => {
                 {/* 1줄에 3개 */}
                 <FormRow col={3}>
                   <div className={styles.formField}>
+                    <label htmlFor="mobileNo" className="sr-only">
+                      휴대전화
+                    </label>
                     <input
                       type="text"
                       name="mobileNo"
                       value={formData.mobileNo}
-                      onChange={handleChange} 
+                      onChange={handleChange}
                       className={styles.formInput}
                       placeholder="휴대전화"
                     />
                   </div>
                   <div className={styles.formField}>
-                    <input 
+                    <label htmlFor="landlineNo" className="sr-only">
+                      유선전화
+                    </label>
+                    <input
                       type="text"
                       name="landlineNo"
                       value={formData.landlineNo}
-                      onChange={handleChange} 
-                      placeholder="유선전화" 
+                      onChange={handleChange}
+                      placeholder="유선전화"
                     />
                   </div>
                   <div className={styles.formField}>
@@ -195,10 +216,13 @@ const FormTestPage = () => {
                 {/* 1줄에 1개 (전체 넓이) */}
                 <FormRow col={1}>
                   <div className={styles.formField}>
+                    <label htmlFor="memo" className="sr-only">
+                      메모
+                    </label>
                     <textarea
                       name="memo"
                       value={formData.memo}
-                      onChange={handleChange} 
+                      onChange={handleChange}
                       className={styles.textarea}
                       placeholder="메모(full-width)"
                       rows={4}
@@ -222,12 +246,12 @@ const FormTestPage = () => {
                 </FormRow>
                 <FormRow col={1}>
                   <div className={styles.formField}>
-                  <select 
+                    <select
                       name="service"
                       value={formData.service}
-                      onChange={handleChange} 
-                      className={styles.selectBox} 
-                      >
+                      onChange={handleChange}
+                      className={styles.selectBox}
+                    >
                       <option value="" disabled hidden className="placeholder">
                         선택하세요
                       </option>
@@ -239,10 +263,7 @@ const FormTestPage = () => {
                 </FormRow>
                 <FormRow col={1}>
                   <div className={styles.formField}>
-                    <input 
-                    type="text" 
-                    placeholder="full area" 
-                    />
+                    <input type="text" placeholder="full area" />
                   </div>
                 </FormRow>
               </div>
