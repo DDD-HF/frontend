@@ -1,32 +1,38 @@
 import { Form } from '@/shared/ui';
+import { useMemberRegisterStore } from '@/widgets/MemberInfoRegisterForms/model/useMemberRegisterStore';
 import PaymentFormContent from './paymentsForm/PaymentFormContent';
 
 const PaymentsMemberInfoRegisterForm = () => {
-    const handleSubmit = (values: Record<string, unknown>) => {
-        console.log('결제수단 정보:', values);
-    };
+  const { paymentInfo, setPaymentInfo, setActiveTab, markTabCompleted } = useMemberRegisterStore();
 
-    const paymentTypeOptions = [
-        { value: 'CMS', label: 'CMS' },
-        { value: '카드', label: '카드' }
-    ];
+  const handleSubmit = (values: Record<string, unknown>) => {
+    console.log('결제수단 정보:', values);
 
-    return (
-        <Form
-            onSubmit={handleSubmit}
-            initialValues={{
-                paymentType: 'CMS',
-                bank: '',
-                accountNumber: '',
-                cardNumber: '',
-                accountHolderName: '',
-                birthDateOrBusinessNumber: '',
-                consentInfo: ''
-            }}
-        >
-            <PaymentFormContent paymentTypeOptions={paymentTypeOptions} />
-        </Form>
-    );
+    setPaymentInfo(values);
+    markTabCompleted('payment');
+    setActiveTab('additional');
+  };
+
+  const handleGoBack = () => {
+    setActiveTab('basic');
+  };
+
+  const paymentTypeOptions = [
+    { value: 'CMS', label: 'CMS' },
+    { value: '카드', label: '카드' },
+  ];
+
+  return (
+    <Form
+      onSubmit={handleSubmit}
+      initialValues={{
+        ...paymentInfo.formData,
+        paymentType: paymentInfo.paymentType || 'CMS',
+      }}
+    >
+      <PaymentFormContent paymentTypeOptions={paymentTypeOptions} onGoBack={handleGoBack} />
+    </Form>
+  );
 };
 
 export default PaymentsMemberInfoRegisterForm;

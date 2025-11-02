@@ -1,197 +1,206 @@
-import {
-    useState,
-    useRef,
-    useCallback,
-    useEffect,
-    useMemo
-} from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import {useForm} from "./Form.context";
+import { useForm } from './Form.context';
 import { FormContext } from './Form.context';
 import type { FormProps, FormRowProps, FormFieldProps, FormValue } from './Form.types';
 import { useFlashAnimation } from './Form.hooks';
-import {
-    FormWrapper,
-    FormRowWrapper,
-    FormFieldWrapper,
-    Label,
-    ErrorMessage,
-    SubmitButton,
-    SummitButtonWrapper
-} from './Form.styles';
+import { FormWrapper, FormRowWrapper, FormFieldWrapper, Label, ErrorMessage, SubmitButton, SummitButtonWrapper } from './Form.styles';
 
-import TextInput from "@/shared/ui/Layout/Form/Input/TextInput/TextInput.tsx";
-import Dropdown from "@/shared/ui/Layout/Form/Input/Dropdown/Dropdown.tsx";
-import DatePicker from "@/shared/ui/Layout/Form/Input/DatePicker/DatePicker.tsx";
-import RadioGroup from "@/shared/ui/Layout/Form/Input/RadioGroup/RadioGroup.tsx";
+import TextInput from '@/shared/ui/Layout/Form/Input/TextInput/TextInput';
+import Dropdown from '@/shared/ui/Layout/Form/Input/Dropdown/Dropdown';
+import DatePicker from '@/shared/ui/Layout/Form/Input/DatePicker/DatePicker';
+import RadioGroup from '@/shared/ui/Layout/Form/Input/RadioGroup/RadioGroup';
 
 // ========================= Components =========================
 
 const Form = ({ children, onSubmit, initialValues = {} }: FormProps) => {
-    const [values, setValues] = useState<Record<string, FormValue>>(initialValues);
-    const [errors, setErrors] = useState<Record<string, string>>({});
-    const [validationErrors, setValidationErrors] = useState<Record<string, boolean>>({});
-    const [requiredFields, setRequiredFields] = useState<Set<string>>(new Set());
+  const [values, setValues] = useState<Record<string, FormValue>>(initialValues);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [validationErrors, setValidationErrors] = useState<Record<string, boolean>>({});
+  const [requiredFields, setRequiredFields] = useState<Set<string>>(new Set());
 
-    const setValue = useCallback((name: string, value: FormValue) => {
-        setValues(prev => ({ ...prev, [name]: value }));
+  const addRequiredField = useCallback((name: string) => {
+    setRequiredFields(prev => {
+      if (prev.has(name)) return prev;
+      const next = new Set(prev);
+      next.add(name);
+      return next;
+    });
+  }, []);
 
-        if (requiredFields.has(name) && value && String(value).trim() !== '') {
-            setErrors(prev => {
-                const newErrors = { ...prev };
-                delete newErrors[name];
-                return newErrors;
-            });
-        }
-    }, [requiredFields]);
+  const removeRequiredField = useCallback((name: string) => {
+    setRequiredFields(prev => {
+      if (!prev.has(name)) return prev;
+      const next = new Set(prev);
+      next.delete(name);
+      return next;
+    });
+    // 해당 필드의 에러/검증 에러도 정리
+    setErrors(prev => {
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+    setValidationErrors(prev => {
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+  }, []);
 
-    const setError = useCallback((name: string, error: string) => {
-        setErrors(prev => ({ ...prev, [name]: error }));
-    }, []);
+  const setValue = useCallback(
+    (name: string, value: FormValue) => {
+      setValues(prev => ({ ...prev, [name]: value }));
 
-    const clearError = useCallback((name: string) => {
+      if (requiredFields.has(name) && value && String(value).trim() !== '') {
         setErrors(prev => {
-            const newErrors = { ...prev };
-            delete newErrors[name];
-            return newErrors;
+          const newErrors = { ...prev };
+          delete newErrors[name];
+          return newErrors;
         });
-    }, []);
+      }
+    },
+    [requiredFields]
+  );
 
-    const setValidationError = useCallback((name: string, hasError: boolean) => {
-        setValidationErrors(prev => ({ ...prev, [name]: hasError }));
-    }, []);
+  const setValuesAll = useCallback((newValues: Record<string, FormValue>) => {
+    setValues(newValues);
+  }, []);
 
-    const addRequiredField = useCallback((name: string) => {
-        setRequiredFields(prev => new Set(prev).add(name));
-    }, []);
+  const setError = useCallback((name: string, error: string) => {
+    setErrors(prev => ({ ...prev, [name]: error }));
+  }, []);
 
-    const requiredFieldsValidation = useMemo(() => {
-        const missingRequiredFields: string[] = [];
+  const clearError = useCallback((name: string) => {
+    setErrors(prev => {
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+  }, []);
 
-        requiredFields.forEach(fieldName => {
-            const value = values[fieldName];
-            const isEmpty = !value || String(value).trim() === '';
+  const setValidationError = useCallback((name: string, hasError: boolean) => {
+    setValidationErrors(prev => ({ ...prev, [name]: hasError }));
+  }, []);
 
-            if (isEmpty) {
-                missingRequiredFields.push(fieldName);
-            }
-        });
+  const getFieldProps = useCallback(
+    (name: string) => ({
+      value: values[name] ?? '',
+      onChange: (value: FormValue) => setValue(name, value),
+      error: errors[name],
+      hasValidationError: validationErrors[name],
+    }),
+    [values, errors, validationErrors, setValue]
+  );
 
-        return {
-            isValid: missingRequiredFields.length === 0,
-            missingFields: missingRequiredFields
-        };
-    }, [requiredFields, values]);
+  const isFormValid = useCallback(() => {
+    // 현재 등록된(required) 필드만 검사
+    for (const name of requiredFields) {
+      const v = values[name];
+      if (v === undefined || v === null || (typeof v === 'string' && v.trim() === '')) {
+        return false;
+      }
+    }
+    if (Object.keys(errors).length > 0) return false;
+    if (Object.values(validationErrors).some(Boolean)) return false;
+    return true;
+  }, [requiredFields, values, errors, validationErrors]);
 
-    const isFormValid = useMemo(() => {
-        const hasValidationErrors = Object.values(validationErrors).some(hasError => hasError);
-        const { isValid: requiredFieldsValid } = requiredFieldsValidation;
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!isFormValid()) {
+        // 필요시 스크롤/강조 등
+        return;
+      }
+      onSubmit?.(values as Record<string, any>);
+    },
+    [isFormValid, onSubmit, values]
+  );
 
-        return !hasValidationErrors && requiredFieldsValid;
-    }, [validationErrors, requiredFieldsValidation, requiredFields, values]);
-
-    const validateAndSetRequiredFieldErrors = useCallback(() => {
-        const { missingFields } = requiredFieldsValidation;
-        const newErrors: Record<string, string> = {};
-
-        missingFields.forEach(fieldName => {
-            newErrors[fieldName] = '필수 입력 항목입니다.';
-        });
-
-        if (missingFields.length > 0) {
-            setErrors(prev => ({ ...prev, ...newErrors }));
-        }
-
-        return missingFields.length === 0;
-    }, [requiredFieldsValidation]);
-
-    const getFieldProps = useCallback((name: string) => ({
-        value: values[name] || '',
-        onChange: (value: FormValue) => setValue(name, value),
-        error: errors[name],
-        hasValidationError: validationErrors[name],
-    }), [values, errors, validationErrors, setValue]);
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const requiredFieldsValid = validateAndSetRequiredFieldErrors();
-
-        if (!requiredFieldsValid || !isFormValid) {
-            return;
-        }
-
-        console.log('Form submit :', values);
-        onSubmit?.(values);
-    };
-
-    return (
-        <FormContext.Provider value={{
-            values,
-            errors,
-            validationErrors,
-            setValue,
-            setError,
-            clearError,
-            setValidationError,
-            getFieldProps,
-            isFormValid: () => isFormValid,
-            addRequiredField,
-        }}>
-            <FormWrapper onSubmit={handleSubmit}>
-                {children}
-            </FormWrapper>
-        </FormContext.Provider>
-    );
+  return (
+    <FormContext.Provider
+      value={{
+        values,
+        errors,
+        validationErrors,
+        setValue,
+        setValues: setValuesAll,
+        setError,
+        clearError,
+        setValidationError,
+        getFieldProps,
+        isFormValid,
+        addRequiredField,
+        removeRequiredField,
+      }}
+    >
+      <FormWrapper onSubmit={handleSubmit}>{children}</FormWrapper>
+    </FormContext.Provider>
+  );
 };
 
-const FormRow = ({ children, gap = 16 }: FormRowProps) => (
-    <FormRowWrapper $gap={gap}>
-        {children}
-    </FormRowWrapper>
-);
+const FormRow = ({ children, gap = 16 }: FormRowProps) => <FormRowWrapper $gap={gap}>{children}</FormRowWrapper>;
 
 const FormField = ({ name, label, required = false, children }: FormFieldProps) => {
-    const { errors, addRequiredField } = useForm();
-    const { isFlashing, triggerFlash } = useFlashAnimation();
-    const prevErrorRef = useRef<string | undefined>(undefined);
+  const { errors, addRequiredField, removeRequiredField } = useForm();
+  const { isFlashing, triggerFlash } = useFlashAnimation();
+  const prevErrorRef = useRef<string | undefined>(undefined);
 
-    useEffect(() => {
-        if (required && addRequiredField) {
-            addRequiredField(name);
-        }
-    }, [required, name, addRequiredField]);
+  useEffect(() => {
+    if (required)
+      if (addRequiredField) {
+        addRequiredField(name);
+      }
+    return () => {
+      if (required) removeRequiredField(name);
+    };
+  }, [name, required, addRequiredField, removeRequiredField]);
 
-    useEffect(() => {
-        const currentError = errors?.[name];
-        if (currentError !== prevErrorRef.current) {
-            if (currentError || prevErrorRef.current) {
-                triggerFlash();
-            }
-            prevErrorRef.current = currentError;
-        }
-    }, [errors?.[name], triggerFlash]);
+  useEffect(() => {
+    const currentError = errors?.[name];
+    if (currentError !== prevErrorRef.current) {
+      if (currentError || prevErrorRef.current) {
+        triggerFlash();
+      }
+      prevErrorRef.current = currentError;
+    }
+  }, [errors?.[name], triggerFlash]);
 
-    return (
-        <FormFieldWrapper $isFlashing={isFlashing}>
-            {label && <Label $required={required}>{label}</Label>}
-            {children}
-            {errors?.[name] && <ErrorMessage>{errors[name]}</ErrorMessage>}
-        </FormFieldWrapper>
-    );
+  return (
+    <FormFieldWrapper $isFlashing={isFlashing}>
+      {label && <Label $required={required}>{label}</Label>}
+      {children}
+      {errors?.[name] && <ErrorMessage>{errors[name]}</ErrorMessage>}
+    </FormFieldWrapper>
+  );
 };
 
 const FormSubmit = ({ children }: { children: ReactNode }) => {
-    const { isFormValid } = useForm();
-    const formValid = isFormValid();
+  const { isFormValid } = useForm();
+  const formValid = isFormValid();
 
-    return (
-        <SummitButtonWrapper>
-            <SubmitButton type="submit" $disabled={!formValid}>
-                {children}
-            </SubmitButton>
-        </SummitButtonWrapper>
-    );
+  return (
+    <SummitButtonWrapper>
+      <SubmitButton type='submit' $disabled={!formValid}>
+        {children}
+      </SubmitButton>
+    </SummitButtonWrapper>
+  );
+};
+
+const FormSubButton = ({ children, onClick, variant = 'secondary', disabled = false }: any) => {
+  return (
+    <SummitButtonWrapper>
+      <SubmitButton type='button' onClick={onClick} $disabled={disabled} $variant={variant}>
+        {children}
+      </SubmitButton>
+    </SummitButtonWrapper>
+  );
+};
+
+const FormActions = ({ children }: { children: ReactNode }) => {
+  return <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '24px' }}>{children}</div>;
 };
 
 // ========================= Compound Component =========================
@@ -203,5 +212,7 @@ Form.Dropdown = Dropdown;
 Form.DatePicker = DatePicker;
 Form.RadioGroup = RadioGroup;
 Form.Submit = FormSubmit;
+Form.SubButton = FormSubButton;
+Form.Actions = FormActions;
 
 export default Form;

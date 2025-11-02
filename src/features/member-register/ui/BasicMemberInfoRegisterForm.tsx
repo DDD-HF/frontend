@@ -1,26 +1,37 @@
 import { Form } from '@/shared/ui';
+import {useMemberRegisterStore} from "@/widgets/MemberInfoRegisterForms/model/useMemberRegisterStore.ts";
 
 const BasicMemberInfoRegisterForm = () => {
+    const {
+        basicInfo,
+        setBasicInfo,
+        setActiveTab,
+        markTabCompleted
+    } = useMemberRegisterStore();
+
     const handleSubmit = (values: Record<string, any>) => {
         console.log('제출된 값들:', values);
+        setBasicInfo(values);
+        markTabCompleted('basic');
+        setActiveTab('payment');
     };
 
     return (
         <Form
             onSubmit={handleSubmit}
             initialValues={{
-                name: '',
-                memberNumber: '',
-                mobileNumber: '',
-                landlineNumber: '',
-                email: '',
-                isSmsSendingAllowed: 'allowed',
-                registrationDate: '',
-                email2: '',
-                zipCode: '',
-                address: '',
-                detailedAddress: '',
-                memo:''
+                name: basicInfo.name || '',
+                memberNumber: basicInfo.memberNumber || '',
+                mobileNumber: basicInfo.mobileNumber || '',
+                landlineNumber: basicInfo.landlineNumber || '',
+                email: basicInfo.email || '',
+                isSmsSendingAllowed: basicInfo.isSmsSendingAllowed || 'allowed',
+                registrationDate: basicInfo.registrationDate || '',
+                email2: basicInfo.email2 || '',
+                zipCode: basicInfo.zipCode || '',
+                address: basicInfo.address || '',
+                detailedAddress: basicInfo.detailedAddress || '',
+                memo: basicInfo.memo || ''
             }}
         >
             {/* 첫 번째 줄 - 이름, 회원번호 */}
@@ -124,7 +135,10 @@ const BasicMemberInfoRegisterForm = () => {
                 </Form.Field>
             </Form.Row>
 
-            <Form.Submit>회원 등록</Form.Submit>
+            <Form.Actions>
+                <Form.Submit>다음</Form.Submit>
+            </Form.Actions>
+
         </Form>
     );
 };

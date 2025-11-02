@@ -63,19 +63,69 @@ export const SummitButtonWrapper = styled.div`
   gap: 8px;
   padding: 8px;
 `;
+//
+// export const SubmitButton = styled.button<{ $disabled: boolean }>`
+//   padding: 12px 24px;
+//   background-color: ${({ $disabled }) => $disabled ? '#9ca3af' : '#3b82f6'};
+//   color: white;
+//   border: none;
+//   border-radius: 6px;
+//   font-size: 16px;
+//   font-weight: 500;
+//   cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'pointer'};
+//   transition: background-color 0.2s;
+//
+//   &:hover {
+//     background-color: ${({ $disabled }) => $disabled ? '#9ca3af' : '#2563eb'};
+//   }
+// `;
 
-export const SubmitButton = styled.button<{ $disabled: boolean }>`
-  padding: 12px 24px;
-  background-color: ${({ $disabled }) => $disabled ? '#9ca3af' : '#3b82f6'};
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: ${({ $disabled }) => $disabled ? 'not-allowed' : 'pointer'};
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: ${({ $disabled }) => $disabled ? '#9ca3af' : '#2563eb'};
+export const SubmitButton = styled.button<{
+  $disabled?: boolean;
+  $variant?: 'primary' | 'secondary' | 'danger'
+}>`
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: ${props => props.$disabled ? 'not-allowed' : 'pointer'};
+    transition: all 0.2s ease;
+    
+    ${props => {
+  if (props.$disabled) {
+    return `
+                background-color: #e5e7eb;
+                color: #9ca3af;
+            `;
   }
+
+  switch (props.$variant) {
+    case 'secondary':
+      return `
+                    background-color: #f3f4f6;
+                    color: #374151;
+                    border: 1px solid #d1d5db;
+                    &:hover {
+                        background-color: #e5e7eb;
+                    }
+                `;
+    case 'danger':
+      return `
+                    background-color: #ef4444;
+                    color: white;
+                    &:hover {
+                        background-color: #dc2626;
+                    }
+                `;
+    default: // primary
+      return `
+                    background-color: #3b82f6;
+                    color: white;
+                    &:hover {
+                        background-color: #2563eb;
+                    }
+                `;
+  }
+}}
 `;
