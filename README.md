@@ -1,69 +1,36 @@
-# React + TypeScript + Vite
+이 프로젝트는 React, TypeScript, 그리고 빌드 도구로 Vite를 사용하여 개발되었습니다.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📋 프로젝트 환경
+프론트엔드 프레임워크: React
 
-Currently, two official plugins are available:
+언어: TypeScript
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+번들러/빌드 도구: Vite
 
-## Expanding the ESLint configuration
+패키지 관리자: npm
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+📥 브랜치 체크아웃
+현재 프로젝트의 임시 초기 설정 브랜치로 전환합니다.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Bash
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+git checkout initial_setting
+⚙️ 설치 및 실행 (Installation & Running)
+프로젝트를 로컬 환경에서 실행하기 위한 단계별 안내입니다.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. 의존성 설치
+   프로젝트에 필요한 모든 패키지들을 설치합니다.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Bash
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+npm install 2. 개발 서버 실행
+설치가 완료되면, 다음 커맨드를 사용하여 개발 서버를 실행합니다.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Bash
+
+npm run dev 3. 브라우저 접속
+개발 서버가 성공적으로 실행되면, 일반적으로 5173 포트로 접속할 수 있습니다.
+
+브라우저를 열고 다음 주소로 접속하세요:
+
+http://localhost:5173

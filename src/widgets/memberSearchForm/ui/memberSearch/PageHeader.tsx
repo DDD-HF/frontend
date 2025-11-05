@@ -6,7 +6,7 @@ const PageHeader = () => {
   return (
     <div>
       <h2>회원 목록</h2>
-      <p>{`${contextTestCount}`}</p>
+      {/* <p>{`${contextTestCount}`}</p> */}
     </div>
   );
 };
