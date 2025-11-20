@@ -72,10 +72,7 @@ const Sidebar = () => {
     <SidebarContainer className='drawer-side'>
       <SidebarMenu>
         <LogoContainer>
-          <Link to={'/'}>
-            <Logo src='/fms_logo.png' alt='Logo' />
-            <img src='/text_logo.png' alt='Text Logo' />
-          </Link>
+          <p>효성 CMS+</p>
         </LogoContainer>
 
         {routes.map((route: RouteItem, k: number) => (

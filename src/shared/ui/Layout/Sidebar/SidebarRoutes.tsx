@@ -36,53 +36,45 @@ const SubmenuIcon = styled.div`
 `;
 
 const routes: RouteItem[] = [
-  {
-    path: '/dashboard',
-    icon: (
-      <MainIcon>
-        <Squares2X2Icon />
-      </MainIcon>
-    ),
-    label: '대시보드',
-  },
+  // {
+  //   path: '/dashboard',
+  //   icon: (
+  //     <MainIcon>
+  //       <Squares2X2Icon />
+  //     </MainIcon>
+  //   ),
+  //   label: '대시보드',
+  // },
 
   // 회원 메뉴
   {
     path: '',
-    icon: (
-      <MainIcon>
-        <UserIcon />
-      </MainIcon>
-    ),
+    icon: <MainIcon>{/* <UserIcon /> */}</MainIcon>,
     label: '회원관리',
     submenu: [
       {
         path: '/member',
-        icon: (
-          <SubmenuIcon>
-            <UserGroupIcon />
-          </SubmenuIcon>
-        ),
+        icon: <SubmenuIcon>{/* <UserGroupIcon /> */}</SubmenuIcon>,
         label: '회원 목록',
       },
-      {
-        path: '/member/address',
-        icon: (
-          <SubmenuIcon>
-            <MapIcon />
-          </SubmenuIcon>
-        ),
-        label: '주소지 목록',
-      },
-      {
-        path: '/member/payment',
-        icon: (
-          <SubmenuIcon>
-            <WalletIcon />
-          </SubmenuIcon>
-        ),
-        label: '결제수단 목록',
-      },
+      // {
+      //   path: '/member/address',
+      //   icon: (
+      //     <SubmenuIcon>
+      //       <MapIcon />
+      //     </SubmenuIcon>
+      //   ),
+      //   label: '주소지 목록',
+      // },
+      // {
+      //   path: '/member/payment',
+      //   icon: (
+      //     <SubmenuIcon>
+      //       <WalletIcon />
+      //     </SubmenuIcon>
+      //   ),
+      //   label: '결제수단 목록',
+      // },
     ],
   },
 ];
