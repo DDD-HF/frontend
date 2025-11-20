@@ -32,6 +32,7 @@ const PageContent = () => {
   }, []);
 
   const navigateMemberDetail = (memberId: number) => {
+    return;
     navigate(createMemberDetailRoute(memberId));
   };
 

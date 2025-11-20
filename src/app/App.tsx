@@ -14,7 +14,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<DefaultLayout />}>
-          <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.DASHBOARD} replace />} />
+          {/* <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.DASHBOARD} replace />} /> */}
+          <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.MEMBER.LIST} replace />} />
 
           <Route path={ROUTES.DASHBOARD} element={<DashBoard />} />
           <Route path={ROUTES.MEMBER.LIST} element={<MemberSearchPage />} />

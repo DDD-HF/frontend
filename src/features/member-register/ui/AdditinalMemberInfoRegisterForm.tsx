@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form } from '@/shared/ui';
 import { useMemberRegisterStore } from '@/widgets/MemberInfoRegisterForms/model/useMemberRegisterStore';
-import { createMemberDetailRoute } from '@/shared/config';
+import { createMemberDetailRoute, ROUTES } from '@/shared/config';
 import AdditionalFormContent from './additionalForm/AdditionalFormContent';
 import { convertMemberRequestBody } from '../lib/dto/convertMemberRequestBody';
 
@@ -36,7 +36,8 @@ const AdditionalMemberInfoRegisterForm = () => {
       console.log('✅ 등록 성공:', response.data);
       alert('회원 등록이 완료되었습니다!');
       resetAll();
-      navigate(createMemberDetailRoute(allData.basic.memberNumber));
+      // navigate(createMemberDetailRoute(allData.basic.memberNumber));
+      navigate(ROUTES.MEMBER.LIST);
     } catch (error) {
       console.error('❌ 회원 등록 실패:', error);
       alert('회원 등록 중 오류가 발생했습니다.');
