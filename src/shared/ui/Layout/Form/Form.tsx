@@ -161,7 +161,7 @@ const FormField = ({ name, label, required = false, children }: FormFieldProps) 
     const currentError = errors?.[name];
     if (currentError !== prevErrorRef.current) {
       if (currentError || prevErrorRef.current) {
-        triggerFlash();
+        // triggerFlash();
       }
       prevErrorRef.current = currentError;
     }
